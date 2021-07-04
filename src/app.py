@@ -76,6 +76,10 @@ def get_ec2_instances():
         {
             'Name': 'Reboot',
             'Values': ['True']
+        },
+        {
+            'Name': 'instance-state-name',
+            'Values': ['running']
         }
     ]
     result = ec2.instances.filter()
