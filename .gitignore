@@ -1,7 +1,8 @@
 # 外部モジュールを固めるため特定のフォルダだけバージョン管理
 src/*
 !src/app.py
-!/src/modules/
+!/src/requirements.txt
+!/src/response.py
 *.env.*
 # Byte-compiled / optimized / DLL files
 __pycache__/

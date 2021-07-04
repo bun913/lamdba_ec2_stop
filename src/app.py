@@ -1,6 +1,6 @@
 import boto3
 from botocore.exceptions import ClientError
-from modules.response import ResponseHandler
+from response import ResponseHandler
 
 response = ResponseHandler()
 
