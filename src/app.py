@@ -80,5 +80,4 @@ def get_ec2_instances():
         }
     ]
     result = ec2.instances.filter(Filters=filter)
-    import pdb; pdb.set_trace()
     return result
