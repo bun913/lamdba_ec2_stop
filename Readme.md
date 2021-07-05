@@ -10,7 +10,18 @@
 
 決まった時間に関してはAWS CloudWatchEventsで呼び出しを行う
 
-デプロイ自動化等は別途調整
+以下のように `Reboot` のタグが `True` になっている特定のインスタンスのみ停止される
+
+![実行イメージ](images/stop_image.png)
+
+## CloudWatchEventsの設定
+
+今回はAWSコンソールを利用して手動で設定する。
+
+以下のようにCron式でスケジュールを設定しLamdbaを起動する
+(画像ではテストのために16:05を指定)
+
+![CloudWatchEvents](images/cloudwatch_events.png)
 
 ## デバッグ方法
 
