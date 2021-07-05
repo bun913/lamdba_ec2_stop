@@ -27,13 +27,13 @@ class ResponseHandler:
         dic['errorMessage'] = message
         self.errors.append(dic)
 
-    def get_errors(self) -> str:
+    def return_errors(self) -> str:
         """エラーメッセージの返却
 
         Returns:
             [str]: JSON形式のエラー内容
         """
-        return json.dumps(self.errors)
+        raise Exception(json.dumps(self.errors))
 
     def get_respose(self, body: str) -> str:
         """
@@ -41,10 +41,7 @@ class ResponseHandler:
         通常成功時はEC2インスタンスのidをリスト形式で返却
 
         Args:
-            body (str): メッセージ内容
-
-        Returns:
-            [str]: Json形式のレスポンス
+            body (str) レスポンス内容
         """
         dic = ResponseHandler.RES_TEMPLATE.copy()
         dic['Message'] = body
@@ -60,10 +57,10 @@ def lambda_handler(event, context):
         instances.stop()
     except ClientError as e:
         response.append_eroor(type="ClientError", message=str(e))
-        return response.get_errors()
+        response.return_errors()
     except Exception as e:
         response.append_eroor(type="UnExpectedError", message=str(e))
-        return response.get_errors()
+        response.return_errors()
     id_list = [instance.id for instance in instances]
     return response.get_respose(",".join(id_list))
 
@@ -74,7 +71,7 @@ def get_ec2_instances():
     ec2 = boto3.resource('ec2')
     filter = [
         {
-            'Name': 'Reboot',
+            'Name': 'tag:Reboot',
             'Values': ['True']
         },
         {
@@ -82,5 +79,6 @@ def get_ec2_instances():
             'Values': ['running']
         }
     ]
-    result = ec2.instances.filter()
+    result = ec2.instances.filter(Filters=filter)
+    import pdb; pdb.set_trace()
     return result
